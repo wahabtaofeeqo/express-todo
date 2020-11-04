@@ -1,0 +1,59 @@
+<div class="full bg-light">
+	<div class="col-md-5">
+		<div class="mb-3">
+			<a href="/logout" id="logout" class="text-danger font-weight-bold">Logout</a>
+		</div>
+
+		<div class="card">
+			<h4 class="title text-left">Todos</h4>
+			{{#if count}}
+				<div class="alert alert-success rounded-0">A Document was created</div>
+			{{/if}}
+
+			<table style="padding-left: 10px; padding-right: 10px;" class="table table-striped">
+				<tbody>
+
+					{{#if empty}}
+						<tr>
+							<td colspan="4">
+								<p class="text-center">Your Todo list is empty!</p>
+							</td>
+						</tr>
+					{{/if}}
+
+					{{#each todos}}
+						<tr>
+							<td>
+								<input type="checkbox" name="check">
+							</td>
+							<td>
+								{{this.name}}
+							</td>
+
+							<td>
+								{{this.created}}
+							</td>
+
+							<td>
+								<button class="btn btn-danger btn-sm delete" data-id="{{this._id}}" data-name="{{this.name}}">
+									Delete
+								</button>
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+
+		<form action="/todo" method="POST" class="mt-3">
+			<div class="form-row">
+				<div class="col-md-10 pr-md-0">
+					<input type="text" name="todo" autocomplete="off" class="form-control" placeholder="Enter Action" required="required">
+				</div>
+				<div class="col-md-2 pl-md-0">
+					<button class="btn btn-dark btn-block">Add</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

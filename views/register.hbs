@@ -1,0 +1,39 @@
+<div class="col-md-5 col-lg-4">
+	<div class="card">
+		<div class="card-header">
+			<h4 class="card-title mb-0 text-center">Welcome!</h4>
+		</div>
+		<form action="/register" method="POST">
+			<div class="card-body">
+				{{#if reason}}
+					<div class="alert alert-danger mb-3">{{reason}}</div>
+				{{/if}}
+
+				<div class="form-group">
+					<label for="name">Fullname</label>
+					<input type="text" name="name" autocomplete="off" required class="form-control" placeholder="Name">
+				</div>
+
+				<div class="form-group">
+					<label for="username">Email</label>
+					<input type="email" name="email" autocomplete="off" required class="form-control" placeholder="Email">
+				</div>
+
+				<div class="form-group mb-4">
+					<label for="password">Password</label>
+					<input type="password" name="password" autocomplete="off" required class="form-control" placeholder="Password">
+				</div>
+
+				<button class="btn btn-danger">Create</button>
+				<a href="/login" class="btn btn-light">Back to login</a>
+
+				<div class="text-center mt-3">
+					<a href="#">F</a>
+					<a href="#">G</a>
+					<a href="#">L</a>
+					<a href="#">I</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,126 @@
+<div class="container-fluid h-100">
+	<div class="row h-100">
+		<div class="col-md-6 col-lg-7 h-100 bg-primary d-none d-lg-block p-5">
+			<p>
+				<a href="#" class="text-white font-weight-bold">
+					Things.Todo
+				</a>
+			</p>
+
+			<div class="row h-100 d-flex align-items-center">
+				<div class="col-md-6">
+					<h2 class="mb-4 h1 font-weight-bold text-white" style="margin-top: -50px">
+						Explore your creativity.
+					</h2>
+
+					<p class="">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua.
+					</p>
+				</div>
+
+				<div class="col-md-6 h-100">
+					<img src="/images/login.png" class="h-100 w-100">
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6 col-lg-5 px-lg-5 h-100 form-body">
+			<div class="w-100 mb-4">
+				<p class="px-3 mb-4 col-lg-8">Join over 20 million users from around the World using this system!</p>
+			</div>
+
+			<nav class="nav nav-pills w-100 px-3" role="tablist">
+				<a href="#signUp" class="nav-link active" data-toggle="tab" aria-controls="signUp" aria-selected="true" role="tab">
+					Sign Up
+				</a>
+
+				<a href="#login" class="nav-link" data-toggle="tab" aria-controls="login" aria-selected="false" role="tab">
+					Login
+				</a>
+			</nav>
+
+			<!-- Tab contents-->
+			<div class="tab-content w-100">
+
+				<!-- Register -->
+				<div class="tab-pane fade show active" id="signUp" role="tabpanel">
+					<form action="/register" method="POST" class="p-3">
+						<div class="form-group">
+							<label for="name">Fullname</label>
+							<input type="text" name="name" autocomplete="off" required class="form-control" placeholder="Name">
+						</div>
+
+						<div class="form-group">
+							<label for="username">Email</label>
+							<input type="email" name="email" autocomplete="off" required class="form-control" placeholder="Email">
+						</div>
+
+						<div class="form-group">
+							<label for="password">Password</label>
+							<input type="password" name="password" autocomplete="off" required class="form-control" placeholder="Password">
+						</div>
+
+						<div class="form-check mb-4">
+							<input type="checkbox" class="form-check-input" name="terms" value="yes" required>
+							<label class="form-check-label">
+								I agree to all statements included in <a href="#">Terms of Use</a>
+							</label>
+						</div>
+
+						<button class="btn btn-primary btn-block">Create</button>
+
+						<div class="text-center mt-3">
+							<a href="#" class="social">
+								<span>F</span>
+							</a>
+							<a href="#" class="social">
+								<span>G</span>
+							</a>
+							<a href="#" class="social">
+								<span>L</span>
+							</a>
+							<a href="#" class="social">
+								<span>I</span>
+							</a>
+						</div>
+					</form>
+				</div>
+
+				<!-- Login -->
+				<div class="tab-pane fade" id="login" role="tabpanel">
+					<form action="/login" method="POST" class="p-3">
+						<div class="form-group">
+							<label for="username">Email</label>
+							<input type="email" name="email" autocomplete="off" required class="form-control" placeholder="Email">
+						</div>
+
+						<div class="form-group mb-4">
+							<label for="password">Password</label>
+							<input type="password" name="password" autocomplete="off" required class="form-control" placeholder="Password">
+						</div>
+
+						<button class="btn btn-primary btn-block">Login</button>
+					
+						<div class="text-center mt-3">
+							<a href="#" class="social">
+								<span>F</span>
+							</a>
+							<a href="#" class="social">
+								<span>G</span>
+							</a>
+							<a href="#" class="social">
+								<span>L</span>
+							</a>
+							<a href="#" class="social">
+								<span>I</span>
+							</a>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<!-- End Tab contents -->
+		</div>
+	</div>
+</div>
