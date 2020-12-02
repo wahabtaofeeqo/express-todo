@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
-var UserSchema = new Schema({
+const Schema = mongoose.Schema;
+const UserSchema = new Schema({
 	fullname: {type: String, required: true},
 	email: String,
 	facebookID: String,
@@ -20,8 +20,53 @@ UserSchema.methods.validPassword = function(password) {
 	return (this.password == password);
 }
 
-UserSchema.methods.findOrCreate = function(user, provider) {
-	
+UserSchema.statics.findOrCreate = async function(profile, callback) {
+
+	var user;
+	switch(profile.provider) {
+		case 'facebook': 
+			user = await this.findOne({facebookID: profile.id});
+			if (!user) {
+				user = this.createUser('facebookID', profile);
+			}
+
+			callback(user);
+			break;
+
+		case 'google':
+			user = await this.findOne({googleID: profile.id});
+			if (!user) {
+				user = this.createUser('googleID', profile);
+			}
+
+			callback(user);
+			break;
+
+		case 'linkedin':
+			user = await this.findOne({linkedInID: profile.id});
+			if (!user) {
+				user = this.createUser('linkedInID', profile);
+			}
+
+			callback(user);
+			break;
+
+		default: 
+			callback(null);
+	}
+}
+
+UserSchema.statics.createUser = async function(provider, profile) {
+	const user = new this({
+		fullname: profile.name.familyName + " " + profile.name.givenName,
+		email: profile.emails[0].value,
+		provider: profile.id,
+		password: '',
+		created: new Date()
+	});
+
+	await user.save();
+	return user;
 }
 
 const User = mongoose.model('users', UserSchema);

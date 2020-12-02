@@ -17,6 +17,7 @@ const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 //Keys
 const config = require('./config');
 
+//Model
 const User = require('./models/user');
 
 var app = express();
@@ -54,11 +55,14 @@ passport.deserializeUser(function(id, done) {
 //Local
 passport.use(new LocalStrategy(function(username, password, done) {
 	User.findOne({email: username, password: password}, function(err, user) {
-		if (err) return done(err);
+		if (err) 
+			return done(err);
 
-		if (!user) return done(null, false);
+		if (!user) 
+			return done(null, false);
 
-		if (!user.validPassword(password)) return done(null, false);
+		if (!user.validPassword(password)) 
+			return done(null, false);
 
 		return done(null, user);
 	})
@@ -67,40 +71,22 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
 //Facebook
 passport.use(new FacebookStrategy({
-	clientID: "113742617138227",
-	clientSecret: "734869850d9580dcafd73638db7277d2",
+	clientID: config.FACEBOOK_CID,
+	clientSecret: config.FACEBOOK_SID,
 	callbackURL: "http://localhost:3000/auth/facebook/callback",
 	profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified']
 },
 function(accessToken, refreshToken, profile, done) {
-	User.findOne({ facebookID: profile.id }, function(err, user) {
-		if (err) {
-			return done(err);
-		}
 
-		if (!user) {
-			user = new User({
-				fullname: profile.name.familyName + " " + profile.name.givenName,
-				email: profile.emails[0].value,
-				facebookID: profile.id,
-				password: '',
-				created: new Date()
-			});
-
-			user.save(function(err) {
-				if (err) {
-					console.log(err);
-				}
-
-				return done(err, user);
-			})
+	User.findOrCreate(profile, function(user) {
+		if (user == null) {
+			return done(null, false); // Provider not recognized
 		}
 		else {
 			return done(null, user);
 		}
 	})
-})
-);
+}));
 
 //Google
 passport.use(new GoogleStrategy({
@@ -109,29 +95,9 @@ passport.use(new GoogleStrategy({
 	callbackURL: "http://localhost:3000/auth/google/callback"
 }, 
 function(token, secret, profile, done) {
-	User.findOne({ googleID: profile.id }, function(err, user) {
-		if (err) {
-			return done(err);
-		}
-
-		console.log(user);
-
-		if (!user) {
-			user = new User({
-				fullname: profile.displayName,
-				email: profile.emails[0].value,
-				googleID: profile.id,
-				password: '',
-				created: new Date()
-			});
-
-			user.save(function(err) {
-				if (err) {
-					console.log(err);
-				}
-
-				return done(err, user);
-			})
+	User.findOrCreate(profile, function(user) {
+		if (user == null) {
+			return done(null, false); // Provider not recognized
 		}
 		else {
 			return done(null, user);
@@ -147,23 +113,10 @@ passport.use(new LinkedInStrategy({
 	scope: ['r_emailaddress', 'r_liteprofile'],
 }, 
 function(accessToken, refreshToken, profile, done) {
-	User.findOne({ googleID: profile.id }, function(err, user) {
-		if (err) {
-			return done(err);
-		}
-
-		if (!user) {
-			user = new User({
-				fullname: profile.displayName,
-				email: profile.emails[0].value,
-				linkedInID: profile.id,
-				password: '',
-				created: new Date()
-			});
-
-			user.save(function(err) {
-				return done(err, user);
-			})
+	
+	User.findOrCreate(profile, function(user) {
+		if (user == null) {
+			return done(null, false); // Provider not recognized
 		}
 		else {
 			return done(null, user);
